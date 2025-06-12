@@ -16,19 +16,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class GreetingController {
 	
 	@PostMapping
-	public ResponseEntity<String> postGreeting (@RequestBody String value) throws Exception {
-		if (value.length() >10)
-			throw new Exception ("Tamanho do Vlaue deve ser no máximo 10");
+	public ResponseEntity<String> postGreeting
+		(@RequestBody String value) throws Exception {
+		if (value.length() > 10)
+			throw new Exception("Tamanho do value deve ser no máximo 10");
 		return ResponseEntity.status(HttpStatus.CREATED).body(value);
 	}
 	
-	@GetMapping(value = {"","/{namePath}"})
+
+	@GetMapping(value = {"","/","/{namePath}"})
 	public String getGreeting(
-		    @RequestParam(required = false) String name,
-		    @PathVariable(required = false) String namePath) {
+			@RequestParam(required = false) String name,
+			@PathVariable(required = false) String namePath) {
 		if (name == null)
-			name =namePath != null ? namePath : "World";
-		String returnGreeting = String.format("%s %s !", "Hello" , name);
+			name = namePath != null ? namePath : "World";
+		String returnGreeting = String.format("%s %s!", "Hello", name);
 		return returnGreeting;
 	}
 	
@@ -37,5 +39,7 @@ public class GreetingController {
 		String message = ex.getMessage().replaceAll("\r\n", "");
 		return ResponseEntity.badRequest().body(message);
 	}
+	
+	
 	
 }
